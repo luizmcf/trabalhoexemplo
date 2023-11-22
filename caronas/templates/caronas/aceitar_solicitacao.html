@@ -1,0 +1,45 @@
+{% extends 'base_condutor.html' %}
+
+{% block title %}
+Aceitar solicitação
+{% endblock title %}
+
+{% block content %}
+<a href="{% url 'detail_carona_condutor' carona.id %}">
+    <i class="fas fa-long-arrow-alt-left"></i>
+    Voltar para página da carona
+</a>
+
+<h2>Informações do pedido de reserva:</h2>
+<div class="div_container">
+    <div class="div_subcont">
+        <b> Passageiro: </b> <i class="fas fa-star"></i> Nota {{ nota }}
+        <br>
+        <input type="text" value="{{carona_passageiros.id_passageiro.user.get_full_name}}" name="id_passageiro" maxlength="50" disabled/>
+    </div>
+    <div class="div_subcont">
+        <b> Número de vagas solicitadas: </b>
+        <br>
+        <input type="text" value="{{carona_passageiros.num_pessoas}}" disabled/>
+    </div>
+    <div class="div_subcont">
+        <b> Forma de pagamento: </b>
+        <br>
+        <input type="text" value="{{carona_passageiros.tipo_pagamento}}" disabled/>
+    </div>     
+</div>
+
+
+<form method='post' action="{% url 'aceitar_solicitacao' carona.id carona_passageiros.id %}">
+    {% csrf_token %}
+    <button type="submit" name="btn_aceitar" class="center">Aceitar</button>
+</form><br />
+
+
+
+<form method='post' action="{% url 'aceitar_solicitacao' carona.id carona_passageiros.id %}">
+    {% csrf_token %}
+    <button type="submit" name="btn_rejeitar" class="center">Rejeitar</button>
+</form>
+
+{% endblock content %} 

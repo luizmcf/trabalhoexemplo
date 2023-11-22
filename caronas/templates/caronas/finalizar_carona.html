@@ -1,0 +1,22 @@
+{% extends 'base_condutor.html' %}
+
+{% block title %}
+Finalizar Carona
+{% endblock title %}
+
+{% block content %}
+<a href="{% url 'detail_carona_condutor' carona.id %}">
+    <i class="fas fa-long-arrow-alt-left"></i>
+    Voltar para página da carona
+</a>
+
+<form action="{% url 'finalizar_carona' carona.id %}" method="post">
+    {% csrf_token %}
+    <center>
+    <p>
+        Finalizar carona?
+    </p>
+    <button type="submit" class="center">Finalizar</button>
+    </center>
+</form>
+{% endblock content %}

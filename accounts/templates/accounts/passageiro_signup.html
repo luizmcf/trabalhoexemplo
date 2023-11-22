@@ -1,0 +1,26 @@
+{% extends 'base_semlogin.html' %}
+
+{% block title %}
+Novo Passageiro
+{% endblock title %}
+
+{% block content %}
+<a href="{% url 'login' %}">
+    <i class="fas fa-long-arrow-alt-left"></i>
+    Já sou cadastrado
+</a>
+
+<p><h2>Criar Usuário de Passageiro</h2></p>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <hr>
+    
+    <h3>Dados pessoais:</h3>
+    {{ profile_form.as_p }}
+    <button type="submit">SUBMETER</button>
+</form>
+
+{% endblock content %} 

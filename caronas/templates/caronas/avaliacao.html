@@ -1,0 +1,26 @@
+{% extends base %}
+
+{% block title %}
+Avaliação
+{% endblock title %}
+
+{% block content %}
+<h2>Avaliar {{ avaliado.user.get_full_name}} </h2>
+
+<form action="{% url 'avaliacao' carona.id carona_passageiros.id %}" method="post">
+    {% csrf_token %}
+    <p>
+        <label>Nota:</label>
+        <select id="nota_avaliacao" name="nota_avaliacao">
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+        </select><br />
+        <label>*Comentário adicional:</label>
+        <input type="text" name="comentario_avaliacao" id="comentario_avaliacao" placeholder="-" />
+    </p>
+    <button type="submit">Avaliar</button>
+</form>
+{% endblock content %}

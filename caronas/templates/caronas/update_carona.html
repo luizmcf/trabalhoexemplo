@@ -1,0 +1,65 @@
+{% extends 'base_condutor.html' %}
+
+{% block title %}
+Atualizar Carona
+{% endblock title %}
+
+{% block content %}
+<a href="{% url 'detail_carona_condutor' carona.id %}">
+    <i class="fas fa-long-arrow-alt-left"></i>
+    Voltar para página da carona
+</a>
+
+<h2>Atualizar Dados da Carona</h2>
+<form method="POST" action="{% url 'update_carona' carona.id%}">
+    {% csrf_token %}
+    {{ carona_form.as_p }}
+    
+    <label>CEP da partida:
+    <input name="cep_origem" type="text" id="cep_ori" value="{{carona.cep_origem}}" size="10" maxlength=8
+            onblur="pesquisacep_origem(this.value);" /></label><br />
+    <label>Endereço da partida:
+    <input name="endereco_origem" type="text" id="rua_ori" size="60" value="{{carona.endereco_origem}}" /></label><br />
+    <label>Número da partida:
+    <input name="num_origem" type="text" id="num_ori" value={{carona.num_origem}} /></label><br />
+    <label>Bairro da partida:
+    <input name="bairro_origem" type="text" id="bairro_ori" size="40" value="{{carona.bairro_origem}}" /></label><br />
+    <label>Cidade da partida:
+    <input name="cidade_origem" type="text" id="cidade_ori" size="40" value="{{carona.cidade_origem}}" /></label><br />
+    <label>Estado da partida:</label>
+    <select name="estado_origem">
+        {% for UF in UFs %}
+            {%if UF == carona.estado_origem%}
+                <option value="{{UF}}" selected>{{UF}}</option>
+            {%else%}
+                <option value="{{UF}}">{{UF}}</option>
+            {%endif%}
+        {% endfor %}
+    </select><br />
+    <label>CEP do destino:
+    <input name="cep_destino" type="text" id="cep_des" value="{{carona.cep_destino}}" size="10" maxlength="8"
+            onblur="pesquisacep_destino(this.value);" /></label><br />
+    <label>Endereço do destino:
+    <input name="endereco_destino" type="text" id="rua_des" size="60" value="{{carona.endereco_destino}}" /></label><br />
+    <label>Número do destino:
+    <input name="num_destino" type="text" id="num_des" value="{{carona.num_destino}}" /></label><br />
+    <label>Bairro do destino:
+    <input name="bairro_destino" type="text" id="bairro_des" size="40" value="{{ carona.bairro_destino }}" /></label><br />
+    <label>Cidade do destino:
+    <input name="cidade_destino" type="text" id="cidade_des" size="40" value="{{ carona.cidade_destino }}" /></label><br />
+    <label>Estado do destino:</label>
+    <select name="estado_destino">
+        {% for UF in UFs %}
+            {%if UF == carona.estado_destino%}
+                <option value="{{UF}}" selected>{{UF}}</option>
+            {%else%}
+                <option value="{{UF}}">{{UF}}</option>
+            {%endif%}
+        {% endfor %}
+    </select><br />
+    <label>Observações (Opcional):
+    <input name="observacoes" type="text" value="{{carona.observacoes}}" /></label><br />
+        
+    <button type="submit">Atualizar</button>
+</form>
+{% endblock content %}

@@ -1,0 +1,69 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" id="TOP">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}{% endblock %} || CarPoli
+    </title>
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="shortcut icon" href="{% static 'logo.ico' %}"/>
+    <link rel="ICON" href="{% static 'logo.ico' | relURL %}"/> 
+    <script src="https://kit.fontawesome.com/421827ddfd.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header id="cabecalho-principal">
+
+        <div class="header-cima" >
+            <a href="{% url 'index' %}"><img src="{% static 'logo.svg' %}" width="300px"></a>
+
+            {% if user.is_authenticated %}
+            <div class="dropdown">
+                <i class="fas fa-user-circle fa-3x"></i>
+                <div class="dropdown-content">
+                    <a href="{% url 'perfil' %}">
+                        Meu perfil
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <a href="{% url 'logout' %}">
+                        SAIR
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+        {% if user.is_authenticated %}
+        <nav id="navegacao-principal" >
+            <a href="{% url 'usuarios_list' %}">
+                <i class="fas fa-list"></i>
+                Usuários
+            </a>
+            <a href="{% url 'novos_condutores' %}"> 
+                <i class="fas fa-user-check"></i>
+                Verificar condutores
+            </a>
+        </nav>
+        {% endif %}
+
+    </header>
+
+    <main id="conteiner-principal">
+        {% block content %}
+        {% endblock content %}
+        <a href="#TOP" id="scroll-up"><i class="fas fa-angle-double-up fa-2x"></i></a>
+    </main>
+
+    <footer id="rodape-principal">
+        <small>Copyright 2021 - CARPOLI <i class="far fa-copyright"></i>.</small>
+    </footer>
+</body>
+
+</html>

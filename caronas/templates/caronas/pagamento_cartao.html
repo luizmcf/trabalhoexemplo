@@ -1,0 +1,14 @@
+{% extends 'base_passageiro.html' %}
+
+{% block title %}
+Escolher Cartão
+{% endblock title %}
+
+{% block content %}
+<h2>Escolha o cartão utilizado</h2>
+<form method="POST" action="{% url 'pagamento_cartao' carona_passageiros.id%}">
+    {% csrf_token %}
+    {{ carona_passageiros_form.as_p }}
+    <button type="submit">Escolher</button> 
+</form>
+{% endblock content %}

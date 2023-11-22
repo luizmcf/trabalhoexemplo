@@ -1,0 +1,129 @@
+{% extends Ext %}
+
+{% block title %}
+Histórico
+{% endblock title %}
+
+{% block content %}
+    <a href="{% url 'index' %}">
+        <i class="fas fa-long-arrow-alt-left"></i>
+        Voltar para página inicial
+    </a>
+    <p><h2>Seu histórico de viagens</h2></p>
+    <form action="{% url 'historico'%}" method="post">
+    {% csrf_token %}
+    <div class="div_container_rev">
+        <div class="div_subcont_mini">
+                Filtrar por: 
+                <select name="order">
+                    {%if filtro in "Data_Inv"%}
+                    <option value="Data_Inv" selected>Mais recentes</option>
+                    {%else%}
+                    <option value="Data_Inv">Mais recentes</option>
+                    {%endif%}
+                    {%if filtro in "horario_carona"%}
+                    <option value="horario_carona" selected>Mais antigas</option>
+                    {%else%}
+                    <option value="horario_carona">Mais antigas</option>
+                    {%endif%}
+                    {%if filtro in "cidade_origem"%}
+                    <option value="cidade_origem" selected>Cidade de origem</option>
+                    {%else%}
+                    <option value="cidade_origem">Cidade de origem</option>
+                    {%endif%}
+                    {%if filtro in "cidade_destino"%}
+                    <option value="cidade_destino" selected>Cidade de destino</option>
+                    {%else%}
+                    <option value="cidade_destino">Cidade de destino</option>
+                    {%endif%}
+                </select>
+        </div>
+        <div class="div_subcont_mini">
+            <br>
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </div>
+    </form>
+    </div>
+    <hr>
+{% if caronas_list %}
+<h2>Foram encontradas {{caronas_list.count}} viagens!</h2>
+
+<section class="cards-grid">
+    {%if filtro in "Data_Inv"%}
+    {% for carona in caronas_list|dictsortreversed:"horario_carona" %}
+    <div class="card-container">
+            De
+            <small>
+                {{ carona.endereco_origem }}, {{ carona.num_origem }}, {{ carona.bairro_origem }} -
+                {{ carona.cidade_origem }}, {{ carona.estado_origem }}
+            </small>
+            
+            Para
+            <small>
+                {{ carona.endereco_destino }}, {{ carona.num_destino }}, {{ carona.bairro_destino }} -
+                {{ carona.cidade_destino }}, {{ carona.estado_destino }}
+            </small>
+            
+            Data e hora<small>{{ carona.horario_carona|date:"j/m/y - H:i" }}</small>
+            {%if Ext in "base_passageiro.html"%}
+            Condutor
+            <small>
+                {{ carona.id_condutor.id_user.user.get_full_name }}
+            </small>
+            {%else%}
+            Passageiros/Vagas
+            <small>
+                {{ carona.vagas }} / {{ carona.vagas_disponiveis }}
+            </small>
+            {%endif%}
+            Veículo
+            <small>
+                {{ carona.id_veiculo.fabricante_veic }} {{ carona.id_veiculo.modelo_veic }}<br>
+                {{ carona.id_veiculo.placa_veic }} - {{ carona.id_veiculo.cor_veic }}<br>
+            </small>
+            
+
+            <a href="{% url 'historico_detail' carona.id %}">DETALHES</a>
+
+        </div>
+    {% endfor %}
+    {%else%}
+    {% for carona in caronas_list|dictsort:filtro %}
+    <div class="card-container">
+            De
+            <small>
+                {{ carona.endereco_origem }}, {{ carona.num_origem }}, {{ carona.bairro_origem }} -
+                {{ carona.cidade_origem }}, {{ carona.estado_origem }}
+            </small>
+            
+            Para
+            <small>
+                {{ carona.endereco_destino }}, {{ carona.num_destino }}, {{ carona.bairro_destino }} -
+                {{ carona.cidade_destino }}, {{ carona.estado_destino }}
+            </small>
+            
+            Data e hora<small>{{ carona.horario_carona|date:"j/m/y - H:i" }}</small>
+            
+            Condutor
+            <small>
+                {{ carona.id_condutor.id_user.user.get_full_name }}
+            </small>
+
+            Veículo
+            <small>
+                {{ carona.id_veiculo.fabricante_veic }} {{ carona.id_veiculo.modelo_veic }}<br>
+                {{ carona.id_veiculo.placa_veic }} - {{ carona.id_veiculo.cor_veic }}<br>
+            </small>
+            
+
+            <a href="{% url 'historico_detail' carona.id %}">DETALHES</a>
+
+        </div>
+    {% endfor %}
+    {%endif%}
+</section>
+
+{% else %}
+    <h3>Você não realizou nenhuma carona :(</h3>
+{% endif %}
+{% endblock content %}

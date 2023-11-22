@@ -1,0 +1,47 @@
+{% extends 'base_condutor.html' %}
+
+{% block title %}
+Minhas Caronas
+{% endblock title %}
+
+{% block content %}
+
+{% if caronas_list %}
+<section class="cards-grid">
+    {% for carona in caronas_list|dictsort:"horario_carona" %}
+    <div class="card-container">
+            De
+            <small>
+                {{ carona.endereco_origem }}, {{ carona.num_origem }}, {{ carona.bairro_origem }} -
+                {{ carona.cidade_origem }}, {{ carona.estado_origem }}
+            </small>
+            
+            Para
+            <small>
+                {{ carona.endereco_destino }}, {{ carona.num_destino }}, {{ carona.bairro_destino }} -
+                {{ carona.cidade_destino }}, {{ carona.estado_destino }}
+            </small>
+            
+            Data e hora<small>{{ carona.horario_carona|date:"j/m/y - H:i" }}</small>
+            
+            Veículo
+            <small>
+                {% for veiculo in veiculos_list %}
+                    {% if veiculo == carona.id_veiculo %}
+                        {{ veiculo.fabricante_veic }} {{ veiculo.modelo_veic }}<br>
+                        {{ veiculo.placa_veic }} - {{ veiculo.cor_veic }}<br>
+                    {% endif %}
+                {% endfor %}
+            </small>
+
+            <a href="{% url 'detail_carona_condutor' carona.id %}">DETALHES</a>
+
+        </div>
+    {% endfor %}
+</section>
+
+{% else %}
+<h3>Você não possui caronas agendadas e ainda não realizou nenhuma carona :(</h3>
+{% endif %}
+
+{% endblock content %}

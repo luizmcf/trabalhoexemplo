@@ -1,0 +1,22 @@
+{% extends 'base_passageiro.html' %}
+
+{% block title %}
+Cancelar Reserva
+{% endblock title %}
+
+{% block content %}
+<a href="{% url 'detail_carona_passageiro' carona.id %}">
+    <i class="fas fa-long-arrow-alt-left"></i>
+    Voltar para página da carona
+</a>
+
+<h2>Reservar carona</h2>
+
+<form action="{% url 'cancelar_reserva' carona_passageiros.id %}" method="post">
+    {% csrf_token %}
+    <p>
+        Você tem certeza que deseja cancelar a reserva da carona?
+    </p>
+    <button type="submit" class="center">Cancelar reserva</button>
+</form>
+{% endblock content %}

@@ -1,0 +1,71 @@
+{% extends 'base_passageiro.html' %}
+
+{% block title %}
+Dados da Viagem
+{% endblock title %}
+
+{% block content %}
+<a href="{% url 'index' %}">
+    <i class="fas fa-long-arrow-alt-left"></i>
+    Voltar para página inicial
+</a>
+
+<p><h2>Dados da carona:</h2></p>
+
+    
+Condutor: {{condutor.user.get_full_name}} / <i class="fas fa-star"></i> Nota {{ nota }}
+<br>
+<br>
+Veículo utilizado: {{veiculo.modelo_veic}}
+<br>
+<br>
+Data e horário da carona: {{carona.horario_carona|date:"D, d/m/Y"}} - {{carona.horario_carona|time:"H:i"}}
+<br>
+<br>
+Preço por passageiro: R$ {{carona.valor_carona}}
+<br>
+<br>
+Número de vagas disponíveis: {{carona.vagas_disponiveis}}
+<br>
+<br>
+Endereço de origem: {{ carona.endereco_origem }}, {{ carona.num_origem }}, {{ carona.bairro_origem }}, {{ carona.cidade_origem }}/{{ carona.estado_origem }}, CEP {{ carona.cep_origem }}
+<br>
+<br>
+Endereço de destino: {{ carona.endereco_destino }}, {{ carona.num_destino }}, {{ carona.bairro_destino }}, {{ carona.cidade_destino }}/{{ carona.estado_destino }}, CEP {{ carona.cep_destino }}
+<br>
+<br>
+Observações adicionais: {{carona.observacoes}}
+
+
+<hr>
+
+{% if log %}
+<h2>Dados da reserva:</h2>
+
+<section class="busca">
+    <article class="carona_busca">
+            Número de vagas solicitadas: {{ carona_passageiros.num_pessoas }} <br />
+            Forma de pagamento: {{ carona_passageiros.tipo_pagamento }} <br />
+            Status: {{ log.status_carona }} <br />      
+            
+            {% if log.status_carona.descricao == "Carona finalizada" %}
+                <a  href="{% url 'avaliacao' carona.id carona_passageiros.id %}" class="center">
+                    <button type="button">Avaliar condutor</button>
+                </a>
+                <br>
+                <a  href="{% url 'denuncia' carona.id carona_passageiros.id %}" class="center">
+                    <button type="button">Denunciar condutor</button>
+                </a>
+            {% else %}
+                <a href="{% url 'cancelar_reserva' carona_passageiros.id%}" class="center">
+                    <button>Cancelar reserva</button>
+                </a>
+            {% endif %}
+    </article>
+</section>
+{% else %}
+<a href="{% url 'reservar_carona' carona.id%}" class="center">
+    <button>Reservar carona</button>
+</a>
+{% endif %}
+{% endblock content %}

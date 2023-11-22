@@ -1,0 +1,22 @@
+{% extends base %}
+
+{% block title %}
+Sem acesso
+{% endblock title %}
+
+{% block content %}
+<a href="{% url 'index' %}">
+    <i class="fas fa-long-arrow-alt-left"></i>
+    Voltar para página principal
+</a>
+<h1 class="titulo">
+Acesso Negado
+</h1>
+<center>
+<p>Sua conta não possui acesso a esta página.</p>
+<p>Para prosseguir, faça um login com uma conta que tenha.</p>
+</center>
+<a href="{% url 'login' %}" class="center">
+    <button>Fazer login</button>
+</a>
+{% endblock content %}

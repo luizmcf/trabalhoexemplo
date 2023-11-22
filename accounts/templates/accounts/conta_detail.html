@@ -1,0 +1,52 @@
+{% extends 'base_condutor.html' %}
+
+{% block title %}
+{{conta.apelido_conta}}
+{% endblock title %}
+
+{% block content %}
+<div class="div_main">
+    <a href="{% url 'pagamento' %}">
+        <i class="fas fa-long-arrow-alt-left"></i>
+        Voltar para a lista de contas
+    </a>
+    <p><h2>{{conta.apelido_conta}}</h2></p>
+    {% csrf_token %}
+    <div class="div_container_rev">
+        <div class="div_subcont_mini">
+            <a href="{% url 'conta_update' conta.id%}">
+                Atualizar Dados
+            </a>
+        </div>
+        <div class="div_subcont_mini">
+            <a href="{% url 'conta_delete' conta.id %}">
+                Excluir conta
+            </a>
+        </div>
+    </div>
+    <hr>
+        <h2>Informações da conta:</h2>
+        <div class="div_container">
+            <div class="div_subcont">
+                <b> Apelido da conta: </b>
+                <br>
+                {{conta.apelido_conta}}
+            </div>
+            <div class="div_subcont">
+                <b> Banco: </b>
+                <br>
+                {{conta.banco_conta}}
+            </div>
+            <div class="div_subcont">
+                <b> Agencia: </b>
+                <br>
+                {{conta.agencia_conta}}
+            </div>
+            <div class="div_subcont">
+                <b> Número da conta: </b>
+                <br>
+                {{conta.num_conta}}
+            </div>
+        </div>
+</div>
+{% endblock content %} 

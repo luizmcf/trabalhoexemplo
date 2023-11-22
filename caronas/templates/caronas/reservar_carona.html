@@ -1,0 +1,20 @@
+{% extends 'base_passageiro.html' %}
+
+{% block title %}
+Reservar Carona
+{% endblock title %}
+
+{% block content %}
+<a href="{% url 'detail_carona_passageiro' carona.id %}">
+    <i class="fas fa-long-arrow-alt-left"></i>
+    Voltar para página da carona
+</a>
+
+<h2>Reservar carona</h2>
+
+<form action="{% url 'reservar_carona' carona.id %}" method="post">
+    {% csrf_token %}
+    {{ carona_passageiros_form.as_p }}
+    <button type="submit">Solicitar reserva</button>
+</form>
+{% endblock content %}

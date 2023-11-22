@@ -1,0 +1,38 @@
+{% extends 'base_admin.html' %}
+
+{% block title %}
+Verificar condutor
+{% endblock title %}
+
+{% block content %}
+<a href="{% url 'index' %}">
+    <i class="fas fa-long-arrow-alt-left"></i>
+    Voltar para página inicial
+</a>
+
+{% if profile_list %}
+<h2>Perfil dos condutores:</h2>
+
+<section class="busca">
+    {% for profile in profile_list %}
+        {% for condutor in condutor_list %}
+            {% if condutor.id_user == profile %}
+            <article class="carona_busca">
+                Condutor: {{profile.user.get_full_name}} <br />
+                Data de nascimento: {{ profile.nascimento }} <br />
+                N° Registro: {{ condutor.num_carteira_motorista }} <br />
+                Validade: {{ condutor.validade_carteira }} <br /> 
+
+                <a  href="{% url 'verificar_condutor' profile.id %}" class="center">
+                    <button type="button">Verificar perfil</button>
+                </a>
+
+            </article>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+</section>
+{% else %}
+<p>Nenhum perfil para verificação :(</p>
+{% endif %}
+{% endblock content %} 

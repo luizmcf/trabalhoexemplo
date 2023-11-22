@@ -1,0 +1,139 @@
+{% extends 'base_admin.html' %}
+
+{% block title %}
+Perfil
+{% endblock title %}
+
+{% block content %}
+<div class="div_main">
+    <a href="{% url 'index' %}">
+        <i class="fas fa-long-arrow-alt-left"></i>
+        Voltar para página inicial
+    </a>
+    <p><h2>Perfil de {{ profile.user.get_full_name }}</h2></p>
+    {% csrf_token %}
+    <hr>
+    <h3>Dados pessoais:</h3>
+    <div class="div_container">
+        <div class="div_subcont">
+            <b>Nome completo:</b>
+            <br>
+            {{ profile.user.get_full_name }}
+        </div>
+        <div class="div_subcont">
+            <b>Email:</b>
+            <br>
+            {{ profile.user.email }}
+        </div>
+        <div class="div_subcont">
+            <b>CPF:</b>
+            <br>
+            {{ profile.cpf }}
+        </div>
+        <div class="div_subcont">
+            <b>Data de nascimento:</b>
+            <br>
+            {{ profile.nascimento|date:"SHORT_DATE_FORMAT" }}
+        </div>
+        <div class="div_subcont">
+            <b>Telefone:</b>
+            <br>
+            {{ profile.telefone }}
+        </div>
+        <div class="div_subcont">
+            <b>CEP:</b>
+            <br>
+            {{ profile.cep }}
+        </div>
+        <div class="div_subcont">
+            <b>Endereço:</b>
+            <br>
+            {{ profile.endereco }}
+        </div>
+        <div class="div_subcont">
+            <b>Nº:</b>
+            <br>
+            {{ profile.num_residencia }}
+        </div>
+        <div class="div_subcont">
+            <b>Complemento:</b>
+            <br>
+            {{ profile.complemento }}
+        </div>
+        <div class="div_subcont">
+            <b>Bairro:</b>
+            <br>
+            {{ profile.bairro }}
+        </div>
+        <div class="div_subcont">
+            <b>Cidade:</b>
+            <br>
+            {{ profile.cidade }}
+        </div>
+        <div class="div_subcont">
+            <b>Estado:</b>
+            <br>
+            {{ profile.estado }}
+        </div>
+    </div>
+    {% if  profile.is_condutor%}
+    <hr>
+    <h3>Dados de condutor:</h3>
+    <div class="div_container">
+        <div class="div_subcont">
+            <b> Numero da carteira: </b>
+            <br>
+            {{ profile.condutor.num_carteira_motorista }}
+        </div>
+        <div class="div_subcont">
+            <b> Validade: </b>
+            <br>
+            {{ profile.condutor.validade_carteira|date:"SHORT_DATE_FORMAT" }}
+        </div>
+    </div>
+    {%endif%}
+    
+    {% if caronas %}
+    <hr>
+    <h3>Histórico de caronas:</h3>
+    <table>
+        <tr>
+            <th>Origem</th>
+            <th>Destino</th>
+            <th>Data e horário</th>
+            {% if profile.is_passageiro %}<th>Condutor</th>
+            {% elif profile.is_condutor %}<th>Veículo</th>
+            {% endif %}
+        </tr>
+        {% for carona in caronas %}
+            <tr>
+                <td>
+                    {{ carona.endereco_origem }}, {{ carona.num_origem }}<br>
+                    {{ carona.cidade_origem }} - {{ carona.estado_origem }}. CEP {{ carona.cep_origem }}
+                </td>
+                <td>
+                    {{ carona.endereco_destino }}, {{ carona.num_destino }}<br>
+                    {{ carona.cidade_destino }} - {{ carona.estado_destino }}. CEP {{ carona.cep_destino }}
+                </td>
+                <td>{{ carona.horario_carona|date:"j/m/y - H:i" }}</td>
+
+                {% if profile.is_passageiro %}
+                <td>{{ carona.id_condutor }}</td>
+                {% elif profile.is_condutor %}
+                <td>
+                    {{ carona.id_veiculo.fabricante_veic }}
+                    {{ carona.id_veiculo.modelo_veic }}
+                    {{ carona.id_veiculo.cor_veic }}<br>
+                    Placa {{ carona.id_veiculo.placa_veic }}
+                </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+    
+    <hr>
+
+</div>
+
+{% endblock content %} 

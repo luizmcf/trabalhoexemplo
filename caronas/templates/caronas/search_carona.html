@@ -1,0 +1,106 @@
+{% extends 'base_passageiro.html' %}
+
+{% block title %}
+Buscar Caronas
+{% endblock title %}
+
+{% block content %}
+<h2>Busca de Caronas</h2>
+
+<form action="{% url 'search_carona' %}">
+    <p>
+        <label for="id_query">Data da viagem:</label>
+        <input type="date" name="q_data" id="id_query" />
+        <label for="id_query">Cidade de origem:</label>
+        <input type="text" name="q_cid_ori" id="id_query" placeholder="Cidade" />
+        <label for="id_query">Estado de origem:</label>
+        <select id="id_query" name="q_est_ori">
+            <option value="AC">AC</option>
+            <option value="AL">AL</option>
+            <option value="AP">AP</option>
+            <option value="AM">AM</option>
+            <option value="BA">BA</option>
+            <option value="CE">CE</option>
+            <option value="DF">DF</option>
+            <option value="ES">ES</option>
+            <option value="GO">GO</option>
+            <option value="MA">MA</option>
+            <option value="MT">MT</option>
+            <option value="MS">MS</option>
+            <option value="MG">MG</option>
+            <option value="PA">PA</option>
+            <option value="PB">PB</option>
+            <option value="PR">PR</option>
+            <option value="PE">PE</option>
+            <option value="PI">PI</option>
+            <option value="RJ">RJ</option>
+            <option value="RN">RN</option>
+            <option value="RS">RS</option>
+            <option value="RO">RO</option>
+            <option value="RR">RR</option>
+            <option value="SC">SC</option>
+            <option value="SP">SP</option>
+            <option value="SE">SE</option>
+            <option value="TO">TO</option>
+        </select>
+        <label for="id_query">Cidade de destino:</label>
+        <input type="text" name="q_cid_des" id="id_query" placeholder="Cidade" />
+        <label for="id_query">Estado de destino:</label>
+        <select id="id_query" name="q_est_des">
+            <option value="AC">AC</option>
+            <option value="AL">AL</option>
+            <option value="AP">AP</option>
+            <option value="AM">AM</option>
+            <option value="BA">BA</option>
+            <option value="CE">CE</option>
+            <option value="DF">DF</option>
+            <option value="ES">ES</option>
+            <option value="GO">GO</option>
+            <option value="MA">MA</option>
+            <option value="MT">MT</option>
+            <option value="MS">MS</option>
+            <option value="MG">MG</option>
+            <option value="PA">PA</option>
+            <option value="PB">PB</option>
+            <option value="PR">PR</option>
+            <option value="PE">PE</option>
+            <option value="PI">PI</option>
+            <option value="RJ">RJ</option>
+            <option value="RN">RN</option>
+            <option value="RS">RS</option>
+            <option value="RO">RO</option>
+            <option value="RR">RR</option>
+            <option value="SC">SC</option>
+            <option value="SP">SP</option>
+            <option value="SE">SE</option>
+            <option value="TO">TO</option>
+        </select>
+    </p>
+    <button type="submit">Buscar</button>
+</form>
+
+<hr>
+
+<h2>Resultado da Busca</h2>
+{% if carona_list %}
+<section class="busca">
+    {% for carona in carona_list %}
+    <a href="{% url 'detail_carona_passageiro' carona.id %}" class="carona"> 
+    <article class="carona_busca">
+          
+            De: {{ carona.endereco_origem }}, {{ carona.num_origem }}, {{ carona.bairro_origem }}, {{ carona.cidade_origem }}/{{ carona.estado_origem }} <br />
+            Para: {{ carona.endereco_destino }}, {{ carona.num_destino }}, {{ carona.bairro_destino }}, {{ carona.cidade_destino }}/{{ carona.estado_destino }} <br />
+            Quando: {{ carona.horario_carona|date:"D, d M Y - H:i" }} <br />
+            Preço: R$ {{ carona.valor_carona }} <br />
+            Número de vagas disponíveis: {{ carona.vagas_disponiveis }}
+         
+    </article>
+    </a>
+
+    {% endfor %}
+</section>
+{% else %}
+<p>Não foi encontrada nenhuma carona para a busca. :(</p>
+{% endif %}
+
+{% endblock content %}

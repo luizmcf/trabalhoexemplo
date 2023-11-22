@@ -1,0 +1,104 @@
+{% extends Ext %}
+
+{% block title %}
+Alterar perfil
+{% endblock title %}
+
+{% block content %}
+<div class="div_main">
+    <a href="{% url 'perfil'%}">
+        <i class="fas fa-long-arrow-alt-left"></i>
+        Voltar para o seu perfil
+    </a>
+    <p><h2>Alterar perfil</h2></p>
+    {%if Erro != ""%}
+    * {{Erro}}
+    {%else%}
+    <br>
+    {%endif%}
+    <hr>
+    <h2>Dados pessoais:</h2>
+    <form action="{% url 'perfil_update'%}" method="post">
+        {% csrf_token %}
+        <div class="div_container">
+            <div class="div_subcont">
+                <b>Primeiro Nome:</b>
+                <br>
+                <input type="text" value="{{Usuario.user.first_name}}" name="primeiro_nome" maxlength=50 required/>
+            </div>
+            <div class="div_subcont">
+                <b>Último Nome:</b>
+                <br>
+                <input type="text" value="{{Usuario.user.last_name}}" name="segundo_nome" maxlength=50 required/>
+            </div>
+            <div class="div_subcont">
+                <b>Email:</b>
+                <br>
+                <input type="text" value="{{Usuario.user.email}}" name="email" maxlength=50 required/>
+            </div>
+            <div class="div_subcont">
+                <b>CPF:</b>
+                <br>
+                <input type="text" value="{{Usuario.cpf}}" name="cpf" maxlength=11 required/>
+            </div>
+            <div class="div_subcont">
+                <b>Data de nascimento:</b>
+                <br>
+                <input type="date" value="{{Usuario.nascimento|date:"Y-m-d"}}" name="nascimento" required/>
+            </div>
+            <div class="div_subcont">
+                <b>Telefone:</b>
+                <br>
+                <input type="text" value="{{Usuario.telefone}}" name="telefone" maxlength=11 required/>
+            </div>
+            <div class="div_subcont">
+                <b>CEP:</b>
+                <br>
+                <input type="text" value="{{Usuario.cep}}" name="cep" maxlength=8 required/>
+            </div>
+            <div class="div_subcont">
+                <b>Endereço:</b>
+                <br>
+                <input type="text" value="{{Usuario.endereco}}" name="endereco" maxlength=255 required/>
+            </div>
+            <div class="div_subcont">
+                <b>Nº:</b>
+                <br>
+                <input type="text" value="{{Usuario.num_residencia}}" name="num_residencia" maxlength=8 required/>
+            </div>
+            <div class="div_subcont">
+                <b>Complemento:</b>
+                <br>
+                <input type="text" value="{{Usuario.complemento}}" name="complemento" maxlength=50/>
+            </div>
+            <div class="div_subcont">
+                <b>Bairro:</b>
+                <br>
+                <input type="text" value="{{Usuario.bairro}}" name="bairro" maxlength=255 required/>
+            </div>
+            <div class="div_subcont">
+                <b>Cidade:</b>
+                <br>
+                <input type="text" value="{{Usuario.cidade}}" name="cidade" maxlength=50 required/>
+            </div>
+            <div class="div_subcont">
+                <b>Estado:</b>
+                <br>
+                <select name="estado" required>
+                    {% for estado in Estados %}
+                        {%if estado in Usuario.estado%}
+                            <option value="{{estado}}" selected>{{estado}}</option>
+                        {%else%}
+                            <option value="{{estado}}">{{estado}}</option>
+                        {%endif%}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <center>
+            <button type="submit">Alterar</button>
+            <a  href="{% url 'perfil' %}"><button type="button" id="btn_secundario">Cancelar</button></a>
+        </center>
+    </form>
+</div>
+{% endblock content %} 

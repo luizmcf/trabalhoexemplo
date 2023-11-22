@@ -1,0 +1,27 @@
+{% extends 'base_passageiro.html' %}
+
+{% block title %}
+Apagar Cartão
+{% endblock title %}
+
+{% block content %}
+<div class="div_main">
+    <a href="{% url 'cart_detail' cart.id %}">
+        <i class="fas fa-long-arrow-alt-left"></i>
+        Voltar para as informações do cartão
+    </a>
+
+    <center><h2>Apagar Cartão</h2>
+    <br>
+    <form action="{% url 'cart_delete' cart.id %}" method="post">
+        {% csrf_token %}
+        <b><h3><center>
+            Você tem certeza que deseja apagar "{{cart.apelido_cart}}" ?
+        </center></h3></b>
+        <br>
+        <button type="submit">Apagar</button>
+        <a  href="{% url 'cart_detail' cart.id %}"><button type="button" id="btn_secundario">Cancelar</button></a>
+    </form>
+    </center>
+</div>
+{% endblock content %}

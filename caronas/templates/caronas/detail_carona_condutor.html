@@ -1,0 +1,136 @@
+{% extends 'base_condutor.html' %}
+
+{% block title %}
+Dados da Viagem
+{% endblock title %}
+
+{% block content %}
+<a href="{% url 'index' %}">
+    <i class="fas fa-long-arrow-alt-left"></i>
+    Voltar para página inicial
+</a>
+<h2>Dados da carona:</h2>
+
+<div class="div_container_rev">
+    {% if carona_passageiros_list %}
+        {% for carona_passageiros in carona_passageiros_list %}
+            {% for log in log_list %}
+                {% if log.id_carona_passageiros == carona_passageiros %}
+                    {% if log.status_carona.descricao == "Reserva solicitada" or log.status_carona.descricao == "Reserva confirmada"%}
+                    <div class="div_subcont_mini">
+                        <a href="{% url 'delete_carona' carona.id %}">
+                            Deletar Carona
+                        </a>
+                    </div>
+                    {% else %}
+                    <div class="div_subcont_mini">
+                        <a href="{% url 'update_carona' carona.id %}">
+                            Atualizar Dados
+                        </a>
+                    </div>
+                    <div class="div_subcont_mini">
+                        <a href="{% url 'delete_carona' carona.id %}">
+                            Deletar Carona
+                        </a>
+                    </div>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    {% else %}
+    <div class="div_subcont_mini">
+        <a href="{% url 'update_carona' carona.id %}">
+            Atualizar Dados
+        </a>
+    </div>
+    <div class="div_subcont_mini">
+        <a href="{% url 'delete_carona' carona.id %}">
+            Deletar Carona
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+<hr>
+
+<div class="div_container">
+    Veículo utilizado: {{veiculo.modelo_veic}}
+    <br>
+    <br>
+    Data e horário da carona: {{carona.horario_carona|date:"D, d/m/Y"}} - {{carona.horario_carona|time:"H:i"}}
+    <br>
+    <br>
+    Preço por passageiro: R$ {{carona.valor_carona}}
+    <br>
+    <br>
+    Número de vagas disponíveis: {{ vagas_disponiveis }}
+    <br>
+    <br>
+    Endereço de origem: {{ carona.endereco_origem }}, {{ carona.num_origem }}, {{ carona.bairro_origem }}, {{ carona.cidade_origem }}/{{ carona.estado_origem }}, CEP {{ carona.cep_origem }}
+    <br>
+    <br>
+    Endereço de destino: {{ carona.endereco_destino }}, {{ carona.num_destino }}, {{ carona.bairro_destino }}, {{ carona.cidade_destino }}/{{ carona.estado_destino }}, CEP {{ carona.cep_destino }}
+    <br>
+    <br>
+    Observações adicionais: {{carona.observacoes}}
+</div>
+
+<hr>
+
+<h2>Solicitações de reserva:</h2>
+
+{% if carona_passageiros_list %}
+<section class="busca">
+    {% for carona_passageiros in carona_passageiros_list %}
+        {% for log in log_list %}
+            {% if log.id_carona_passageiros == carona_passageiros %}
+                {% if log.status_carona.descricao == "Reserva solicitada" or log.status_carona.descricao == "Reserva confirmada" or log.status_carona.descricao == "Carona finalizada" %}
+                    <article class="carona_busca">
+                        Passageiro: {{carona_passageiros.id_passageiro.user.get_full_name}} <br />
+                        Número de vagas solicitadas: {{ carona_passageiros.num_pessoas }} <br />
+                        Forma de pagamento: {{ carona_passageiros.tipo_pagamento }} <br />
+                        Status: {{ log.status_carona }} <br /> 
+
+                        {% if log.status_carona.descricao == "Reserva solicitada" %}
+                            <a  href="{% url 'aceitar_solicitacao' carona.id carona_passageiros.id %}" class="center">
+                                <button type="button">Detalhes do pedido</button>
+                            </a>
+                        {% endif %}
+
+                        {% if log.status_carona.descricao == "Carona finalizada" %}
+                            <a  href="{% url 'avaliacao' carona.id carona_passageiros.id %}" class="center">
+                                <button type="button">Avaliar passageiro</button>
+                            </a>
+                            <br>
+                            <a  href="{% url 'denuncia' carona.id carona_passageiros.id %}" class="center">
+                                <button type="button">Denunciar passageiro</button>
+                            </a>
+                        {% endif %}
+                    </article>
+                {% else %}
+                <p>Nenhum pedido de carona :(</p>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+</section>
+{% else %}
+<p>Nenhum pedido de carona :(</p>
+{% endif %}
+ 
+<hr>
+
+{% if carona_passageiros_list %}
+    {% for carona_passageiros in carona_passageiros_list %}
+        {% for log in log_list %}
+            {% if log.id_carona_passageiros == carona_passageiros %}
+                {% if log.status_carona.descricao != "Carona finalizada" %}
+                    <a href="{% url 'finalizar_carona' carona.id %}">
+                        <button type="submit" class="center">Carona Finalizada</button>
+                    </a>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+{% endblock content %}

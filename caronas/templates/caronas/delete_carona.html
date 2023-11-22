@@ -1,0 +1,22 @@
+{% extends 'base_condutor.html' %}
+
+{% block title %}
+Deletar Carona
+{% endblock title %}
+
+{% block content %}
+<a href="{% url 'detail_carona_condutor' carona.id %}">
+    <i class="fas fa-long-arrow-alt-left"></i>
+    Voltar para página da carona
+</a>
+
+<h2>Deletar Carona</h2>
+
+<form action="{% url 'delete_carona' carona.id %}" method="post">
+    {% csrf_token %}
+    <p>
+        Você tem certeza que deseja deletar a carona?
+    </p>
+    <button type="submit" class="center">Deletar</button>
+</form>
+{% endblock content %}

@@ -1,0 +1,76 @@
+{% extends Ext %}
+
+{% block title %}
+Pagamento
+{% endblock title %}
+
+{% block content %}
+<div class="div_main">
+    <a href="{% url 'index' %}">
+        <i class="fas fa-long-arrow-alt-left"></i>
+        Voltar para página inicial
+    </a>
+    <p><h2>Informações de pagamento</h2></p>
+    {% csrf_token %}
+    <div class="div_container_rev">
+        {% if Usuario.is_condutor%}
+        <div class="div_subcont_mini">
+            <a href="{% url 'conta_condutor' %}">
+                Adicionar conta
+            </a>
+        </div>
+        {% endif %}
+        {% if Usuario.is_passageiro%}
+        <div class="div_subcont_mini">
+            <a href="{% url 'pagamento_passageiro' %}">
+                Adicionar cartão
+            </a>
+        </div>
+        {% endif %}
+    </div>
+    <hr>
+    {% if Usuario.is_passageiro%}
+        <h2>Seus cartões:</h2>
+        {% if pag_list %}
+        <section class="busca">
+            {% for pag in pag_list %}
+            <a href="{% url 'cart_detail' pag.id %}"  class="carona"> 
+            <article class="carona_busca">
+                
+                <h3><b>{{pag.apelido_cart}}</b></h3> <br />
+                Cartão de: {{pag.nome_cart}} <br />
+                <b> Final {{pag.numero_cart|slice:"12:16"}} </b><br />
+                
+            </article>
+            </a>
+
+            {% endfor %}
+        </section>
+        {% else %}
+        <p>Não foi encontrado nenhum cartão cadastrado. :(</p>
+        {% endif %}
+    {%endif%}
+    {% if Usuario.is_condutor%}
+        <h2>Contas cadastradas:</h2>
+        {% if pag_list %}
+        <section class="busca">
+            {% for pag in pag_list %}
+            <a href="{% url 'conta_detail' pag.id %}"  class="carona"> 
+            <article class="carona_busca">
+                
+                    <h3><b>{{pag.apelido_conta}} </b></h3> <br />
+                    {{pag.banco_conta}} <br />
+                    Conta: {{pag.num_conta}}<br />
+                    Agencia: {{pag.agencia_conta}}<br />
+                
+            </article>
+            </a>
+
+            {% endfor %}
+        </section>
+        {% else %}
+        <p>Não foi encontrada nenhuma conta cadastrada. :(</p>
+        {% endif %}
+    {%endif%}
+</div>
+{% endblock content %} 

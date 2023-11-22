@@ -1,0 +1,113 @@
+{% extends 'base_admin.html' %}
+
+{% block title %}
+Verificar condutor
+{% endblock title %}
+
+{% block content %}
+<div class="div_main">
+    <a href="{% url 'novos_condutores' %}">
+        <i class="fas fa-long-arrow-alt-left"></i>
+        Voltar para página de verificação
+    </a>
+
+    <hr>
+
+    <h3>Dados pessoais:</h3>
+    <div class="div_container">
+        <div class="div_subcont">
+            <b>Nome completo:</b>
+            <br>
+            {{Usuario.user.get_full_name}}
+        </div>
+        <div class="div_subcont">
+            <b>Email:</b>
+            <br>
+            {{Usuario.user.email}}
+        </div>
+        <div class="div_subcont">
+            <b>CPF:</b>
+            <br>
+            {{Usuario.cpf}}
+        </div>
+        <div class="div_subcont">
+            <b>Data de nascimento:</b>
+            <br>
+            {{Usuario.nascimento|date:"SHORT_DATE_FORMAT"}}
+        </div>
+        <div class="div_subcont">
+            <b>Telefone:</b>
+            <br>
+            {{Usuario.telefone}}
+        </div>
+        <div class="div_subcont">
+            <b>CEP:</b>
+            <br>
+            {{Usuario.cep}}
+        </div>
+        <div class="div_subcont">
+            <b>Endereço:</b>
+            <br>
+            {{Usuario.endereco}}
+        </div>
+        <div class="div_subcont">
+            <b>Nº:</b>
+            <br>
+            {{Usuario.num_residencia}}
+        </div>
+        <div class="div_subcont">
+            <b>Complemento:</b>
+            <br>
+            {{Usuario.complemento}}
+        </div>
+        <div class="div_subcont">
+            <b>Bairro:</b>
+            <br>
+            {{Usuario.bairro}}
+        </div>
+        <div class="div_subcont">
+            <b>Cidade:</b>
+            <br>
+            {{Usuario.cidade}}
+        </div>
+        <div class="div_subcont">
+            <b>Estado:</b>
+            <br>
+            {{Usuario.estado}}
+        </div>
+    </div>
+
+    <hr>
+
+    <h3>Dados da carteira de motorista:</h3>
+    <div class="div_container">
+        <div class="div_subcont">
+            <b> N° Registro: </b>
+            <br>
+            {{Condutor.num_carteira_motorista}}
+        </div>
+        <div class="div_subcont">
+            <b> Validade: </b>
+            <br>
+            {{Condutor.validade_carteira|date:"SHORT_DATE_FORMAT"}}
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<h3>Ativar perfil?</h3>
+
+<form method='post' action="{% url 'verificar_condutor' Usuario.id %}">
+    {% csrf_token %}
+    <button type="submit" name="btn_ativo" class="center">Ativar</button>
+</form><br />
+
+
+
+<form method='post' action="{% url 'verificar_condutor' Usuario.id %}">
+    {% csrf_token %}
+    <button type="submit" name="btn_inativo" class="center">Não</button>
+</form>
+
+{% endblock content %} 

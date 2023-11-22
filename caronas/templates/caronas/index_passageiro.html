@@ -1,0 +1,59 @@
+{% extends 'base_passageiro.html' %}
+
+{% block title %}
+Página inicial
+{% endblock title %}
+
+{% block content %}
+<h3>Bem vindo, {{ user.first_name }}!</h3>
+
+{% if upcoming_caronas_list %}
+<h2>Você possui {{ upcoming_caronas_list.count }} carona(s) agendada(s)</h2>
+
+<section class="cards-grid">
+    {% for carona in upcoming_caronas_list|dictsort:"horario_carona" %}
+        <div class="card-container">
+            De
+            <small>
+                {{ carona.endereco_origem }}, {{ carona.num_origem }}, {{ carona.bairro_origem }} -
+                {{ carona.cidade_origem }}, {{ carona.estado_origem }}
+            </small>
+            
+            Para
+            <small>
+                {{ carona.endereco_destino }}, {{ carona.num_destino }}, {{ carona.bairro_destino }} -
+                {{ carona.cidade_destino }}, {{ carona.estado_destino }}
+            </small>
+            
+            Data/hora<small>{{ carona.horario_carona|date:"j/m/y - H:i" }}</small>
+            
+            Condutor
+            <small>
+                {% for condutor in condutor_list %}
+                    {% if condutor == carona.id_condutor %}
+                        {{ condutor }}
+                    {% endif %}
+                {% endfor %}
+            </small>
+            
+            Veículo
+            <small>
+                {% for veiculo in veiculos_list %}
+                    {% if veiculo == carona.id_veiculo %}
+                        {{ veiculo.fabricante_veic }} {{ veiculo.modelo_veic }}<br>
+                        {{ veiculo.placa_veic }} - {{ veiculo.cor_veic }}<br>
+                    {% endif %}
+                {% endfor %}
+            </small>      
+
+            <a href="{% url 'detail_carona_passageiro' carona.id %}">DETALHES</a>
+
+        </div>
+    {% endfor %}
+</section>
+
+{% else %}
+<h3>Você não possui caronas agendadas</h3>
+{% endif %}
+
+{% endblock content %}

@@ -1,0 +1,71 @@
+{% extends 'base_condutor.html' %}
+
+{% block title %}
+Alterar {{veic.apelido_veic}}
+{% endblock title %}
+
+{% block content %}
+<div class="div_main">
+    <a href="{% url 'veic_detail' veic.id %}">
+        <i class="fas fa-long-arrow-alt-left"></i>
+        Voltar para as informações do veículo
+    </a>
+    <p><h2>Alterar dados de {{veic.apelido_veic}}</h2></p>
+    <br>
+    <hr>
+    <form action="{% url 'veic_update_confirma' veic.id %}" method="post">
+        {% csrf_token %}
+        <b><h3><center>
+            Você tem certeza que deseja alterar "{{veic.apelido_veic}}" ?
+        </center></h3></b>
+        <br>
+        <center>
+            <button type="submit">Alterar</button>
+            <a  href="{% url 'veic_update' veic.id %}"><button type="button" id="btn_secundario">Cancelar</button></a>
+        </center>
+    </form>
+    <br>
+    <hr>
+    <h2>Informações do veículo:</h2>
+        <div class="div_container">
+            <div class="div_subcont">
+                <b> Apelido do veículo: </b>
+                <br>
+                <input type="text" value="{{veic.apelido_veic}}" name="apelido_veic" maxlength="50" disabled/>
+            </div>
+            <div class="div_subcont">
+                <b> Placa: </b>
+                <br>
+                <input type="text" value="{{veic.placa_veic}}" disabled/>
+            </div>
+            <div class="div_subcont">
+                <b> Fabricante: </b>
+                <br>
+                <input type="text" value="{{veic.fabricante_veic}}" disabled/>
+            </div>
+            <div class="div_subcont">
+                <b> Modelo: </b>
+                <br>
+                <input type="text" value="{{veic.modelo_veic}}" disabled/>
+            </div>
+            <div class="div_subcont">
+                <b> Cor: </b>
+                <br>
+                <select name="cor_sel" disabled>
+                    {% for cor in cores %}
+                        {%if cor == veic.cor_veic%}
+                            <option value="{{cor}}" selected>{{cor}}</option>
+                        {%else%}
+                            <option value="{{cor}}">{{cor}}</option>
+                        {%endif%}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="div_subcont">
+                <b> Capacidade: </b>
+                <br>
+                <input type="text" value="{{veic.capacidade_veic}}" disabled/>
+            </div>
+        </div>
+</div>
+{% endblock content %} 

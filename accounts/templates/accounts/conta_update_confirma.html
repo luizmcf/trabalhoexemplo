@@ -1,0 +1,51 @@
+{% extends 'base_condutor.html' %}
+
+{% block title %}
+Alterar {{conta.apelido_conta}}
+{% endblock title %}
+
+{% block content %}
+<div class="div_main">
+    <a href="{% url 'conta_detail' conta.id%}">
+        <i class="fas fa-long-arrow-alt-left"></i>
+        Voltar para as informações da conta
+    </a>
+    <p><h2>Alterar dados de {{conta.apelido_conta}}</h2></p>
+    <br>
+    <hr>
+    <form action="{% url 'conta_update_confirma' conta.id %}" method="post">
+        {% csrf_token %}
+        <b><h3><center>
+            Você tem certeza que deseja alterar "{{conta.apelido_conta}}" ?
+        </center></h3></b>
+        <br>
+        <center>
+            <button type="submit">Alterar</button>
+            <a  href="{% url 'conta_update' conta.id %}"><button type="button" id="btn_secundario">Cancelar</button></a>
+        </center>
+    </form>
+    <h2>Informações da conta bancária:</h2>
+    <div class="div_container">
+        <div class="div_subcont">
+            <b> Apelido da conta: </b>
+            <br>
+            <input type="text" value="{{conta.apelido_conta}}" disabled/>
+        </div>
+        <div class="div_subcont">
+            <b> Banco: </b>
+            <br>
+            <input type="text" value="{{conta.banco_conta}}" disabled/>
+        </div>
+        <div class="div_subcont">
+            <b> Agencia: </b>
+            <br>
+            <input type="text" value="{{conta.agencia_conta}}" disabled/>
+        </div>
+        <div class="div_subcont">
+            <b> Número da conta: </b>
+            <br>
+            <input type="text" value="{{conta.num_conta}}" disabled/>
+        </div>
+    </div>
+</div>
+{% endblock content %} 

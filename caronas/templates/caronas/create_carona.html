@@ -1,0 +1,107 @@
+{% extends 'base_condutor.html' %}
+
+{% block title %}
+Nova Viagem
+{% endblock title %}
+
+{% block content %}
+<a href="{% url 'index' %}">
+    <i class="fas fa-long-arrow-alt-left"></i>
+    Voltar para página inicial
+</a>
+
+<h2>Adicionar carona</h2>
+
+<form action="{% url 'create_carona' %}" method="post">
+    {% csrf_token %}
+    {{ carona_form.as_p }}
+
+    <label>CEP da partida:
+    <input name="cep_origem" type="text" id="cep_ori" value="" size="10" maxlength="8"
+            onblur="pesquisacep_origem(this.value);" /></label><br />
+    <label>Endereço da partida:
+    <input name="endereco_origem" type="text" id="rua_ori" size="60" /></label><br />
+    <label>Número da partida:
+    <input name="num_origem" type="text" id="num_ori" /></label><br />
+    <label>Bairro da partida:
+    <input name="bairro_origem" type="text" id="bairro_ori" size="40" /></label><br />
+    <label>Cidade da partida:
+    <input name="cidade_origem" type="text" id="cidade_ori" size="40" /></label><br />
+    <label>Estado da partida:</label>
+    <select id="uf_ori" name="estado_origem">
+        <option value="AC">AC</option>
+        <option value="AL">AL</option>
+        <option value="AP">AP</option>
+        <option value="AM">AM</option>
+        <option value="BA">BA</option>
+        <option value="CE">CE</option>
+        <option value="DF">DF</option>
+        <option value="ES">ES</option>
+        <option value="GO">GO</option>
+        <option value="MA">MA</option>
+        <option value="MT">MT</option>
+        <option value="MS">MS</option>
+        <option value="MG">MG</option>
+        <option value="PA">PA</option>
+        <option value="PB">PB</option>
+        <option value="PR">PR</option>
+        <option value="PE">PE</option>
+        <option value="PI">PI</option>
+        <option value="RJ">RJ</option>
+        <option value="RN">RN</option>
+        <option value="RS">RS</option>
+        <option value="RO">RO</option>
+        <option value="RR">RR</option>
+        <option value="SC">SC</option>
+        <option value="SP">SP</option>
+        <option value="SE">SE</option>
+        <option value="TO">TO</option>
+    </select><br />
+    <label>CEP do destino:
+    <input name="cep_destino" type="text" id="cep_des" value="" size="10" maxlength="8"
+            onblur="pesquisacep_destino(this.value);" /></label><br />
+    <label>Endereço do destino:
+    <input name="endereco_destino" type="text" id="rua_des" size="60" /></label><br />
+    <label>Número do destino:
+    <input name="num_destino" type="text" id="num_des"/></label><br />
+    <label>Bairro do destino:
+    <input name="bairro_destino" type="text" id="bairro_des" size="40" /></label><br />
+    <label>Cidade do destino:
+    <input name="cidade_destino" type="text" id="cidade_des" size="40" /></label><br />
+    <label>Estado do destino:</label>
+    <select id="uf_des" name="estado_destino">
+        <option value="AC">AC</option>
+        <option value="AL">AL</option>
+        <option value="AP">AP</option>
+        <option value="AM">AM</option>
+        <option value="BA">BA</option>
+        <option value="CE">CE</option>
+        <option value="DF">DF</option>
+        <option value="ES">ES</option>
+        <option value="GO">GO</option>
+        <option value="MA">MA</option>
+        <option value="MT">MT</option>
+        <option value="MS">MS</option>
+        <option value="MG">MG</option>
+        <option value="PA">PA</option>
+        <option value="PB">PB</option>
+        <option value="PR">PR</option>
+        <option value="PE">PE</option>
+        <option value="PI">PI</option>
+        <option value="RJ">RJ</option>
+        <option value="RN">RN</option>
+        <option value="RS">RS</option>
+        <option value="RO">RO</option>
+        <option value="RR">RR</option>
+        <option value="SC">SC</option>
+        <option value="SP">SP</option>
+        <option value="SE">SE</option>
+        <option value="TO">TO</option>
+    </select><br />
+    <label>Observações (Opcional):
+    <input name="observacoes" type="text" value="Nenhuma observação"/></label><br />
+    
+    <button type="submit">Publicar carona</button>
+</form>
+
+{% endblock content %}

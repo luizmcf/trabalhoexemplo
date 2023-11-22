@@ -1,0 +1,62 @@
+{% extends 'base_condutor.html' %}
+
+{% block title %}
+{{veic.apelido_veic}}
+{% endblock title %}
+
+{% block content %}
+<div class="div_main">
+    <a href="{% url 'veiculos' %}">
+        <i class="fas fa-long-arrow-alt-left"></i>
+        Voltar para meus veículos
+    </a>
+    <p><h2>{{veic.apelido_veic}}</h2></p>
+    {% csrf_token %}
+    <div class="div_container_rev">
+        <div class="div_subcont_mini">
+            <a href="{% url 'veic_update' veic.id%}">
+                Atualizar Dados
+            </a>
+        </div>
+        <div class="div_subcont_mini">
+            <a href="{% url 'veic_delete' veic.id%}">
+                Excluir veículo
+            </a>
+        </div>
+    </div>
+    <hr>
+        <h2>Informações do veículo:</h2>
+        <div class="div_container">
+            <div class="div_subcont">
+                <b> Apelido do veículo: </b>
+                <br>
+                {{veic.apelido_veic}}
+            </div>
+            <div class="div_subcont">
+                <b> Placa: </b>
+                <br>
+                {{veic.placa_veic}}
+            </div>
+            <div class="div_subcont">
+                <b> Fabricante: </b>
+                <br>
+                {{veic.fabricante_veic}}
+            </div>
+            <div class="div_subcont">
+                <b> Modelo: </b>
+                <br>
+                {{veic.modelo_veic}}
+            </div>
+            <div class="div_subcont">
+                <b> Cor: </b>
+                <br>
+                {{veic.cor_veic}}
+            </div>
+            <div class="div_subcont">
+                <b> Capacidade: </b>
+                <br>
+                {{veic.capacidade_veic}}
+            </div>
+        </div>
+</div>
+{% endblock content %} 

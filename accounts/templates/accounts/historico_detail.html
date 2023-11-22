@@ -1,0 +1,104 @@
+{% extends Ext %}
+
+{% block title %}
+Detalhe da carona
+{% endblock title %}
+
+{% block content %}
+<div class="div_main">
+    <a href="{% url 'historico' %}">
+        <i class="fas fa-long-arrow-alt-left"></i>
+        Voltar para o historico de caronas
+    </a>
+    <p><h2>Detalhes da carona</h2></p>
+    {% csrf_token %}
+    <br>
+    <hr>
+        <h2>Informações da carona:</h2>
+        <div class="div_container">
+            <div class="div_subcont">
+                <b> Condutor:  </b>
+                <br>
+                {{carona.id_condutor.id_user.user.get_full_name}}
+            </div>
+            <div class="div_subcont">
+                <b> Contato do condutor:  </b>
+                <br>
+                {{carona.id_condutor.id_user.user.email}} / ({{carona.id_condutor.id_user.telefone|slice:"0:2"}}) {{carona.id_condutor.id_user.telefone|slice:"2:7"}}-{{carona.id_condutor.id_user.telefone|slice:"7:11"}}
+            </div>
+            <div class="div_subcont">
+                <b> Veículo utilizado: </b>
+                <br>
+                {{carona.id_veiculo.fabricante_veic}} - {{carona.id_veiculo.modelo_veic}}
+            </div>
+            <div class="div_subcont">
+                <b> Data e horário da carona:  </b>
+                <br>
+                {{carona.horario_carona|date:"D, d/m/Y"}} - {{carona.horario_carona|time:"H:i"}}
+            </div>
+            <div class="div_subcont">
+                <b> Preço por passageiro:</b>
+                <br>
+                 R$ {{carona.valor_carona}}
+            </div>
+            <div class="div_subcont">
+                <b> Vagas reservadas: </b>
+                <br>
+                {{carona.vagas}}/{{carona.vagas_disponiveis}}
+            </div>
+            <div class="div_subcont">
+                <b> Endereço de origem: </b>
+                <br>
+                {{ carona.endereco_origem }}, {{ carona.num_origem }}, {{ carona.bairro_origem }}, {{ carona.cidade_origem }}/{{ carona.estado_origem }}, CEP {{ carona.cep_origem }}
+            </div>
+            <div class="div_subcont">
+                <b> Endereço de destino: </b>
+                <br>
+                {{ carona.endereco_destino }}, {{ carona.num_destino }}, {{ carona.bairro_destino }}, {{ carona.cidade_destino }}/{{ carona.estado_destino }}, CEP {{ carona.cep_destino }}
+            </div>
+            <div class="div_subcont">
+                <b> Observações adicionais: </b>
+                <br>
+                {{carona.observacoes}}
+            </div>
+        </div>
+        <h2>Passageiros:</h2>
+        {%for passageiro in carona.carona_passageiros_set.all%}
+        <hr>
+        <h3 class="titulo">{{passageiro.id_passageiro.user.get_full_name}}</h3>
+        <div class="div_container">
+            <div class="div_subcont">
+                <b> Contato:  </b>
+                <br>
+                {{passageiro.id_passageiro.user.email}} / ({{passageiro.id_passageiro.telefone|slice:"0:2"}}) {{passageiro.id_passageiro.telefone|slice:"2:7"}}-{{passageiro.id_passageiro.telefone|slice:"7:11"}}
+            </div>
+            <div class="div_subcont">
+                <b> Número de vagas solicitadas: </b>
+                <br>
+                {{ passageiro.num_pessoas }}
+            </div>
+            <div class="div_subcont">
+                <b>Forma de pagamento: </b>
+                <br>
+                {{ passageiro.tipo_pagamento }}
+            </div>
+        </div>
+        <h3>Log da carona:</h3>
+        {%for log in passageiro.log_carona_set.all|dictsort:'horario_log'%}
+        <h4 class="titulo">{{log.horario_log}}</h4>
+        <div class="div_container">
+            <div class="div_subcont">
+                <b> Status:  </b>
+                <br>
+                {{log.status_carona}}
+            </div>
+            <div class="div_subcont">
+                <b> Comentario: </b>
+                <br>
+                {{ log.comentario_log }}
+            </div>
+        </div>
+        {%endfor%}
+        {%endfor%}
+</div>
+{% endblock content %} 

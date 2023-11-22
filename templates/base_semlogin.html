@@ -1,0 +1,41 @@
+<!-- html base para as páginas sem estar logado -->
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" id="TOP">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}{% endblock %} || CarPoli
+    </title>
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="shortcut icon" href="{% static 'logo.ico' %}"/>
+    <link rel="ICON" href="{% static 'logo.ico' | relURL %}"/> 
+    <script src="https://kit.fontawesome.com/421827ddfd.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header id="cabecalho-principal">
+        <div class="header-cima" >
+            <a class="center">
+                <img src="{% static 'logo.svg' %}" width="300px">
+            </a>
+        </div>
+    </header>
+
+    <main id="conteiner-principal-login">
+        {% block content %}
+        {% endblock content %}
+    </main>
+
+    <footer id="rodape-principal">
+        <small>Copyright 2021 - CARPOLI <i class="far fa-copyright"></i>.</small>
+    </footer>
+</body>
+
+</html>

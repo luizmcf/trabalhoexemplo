@@ -1,0 +1,21 @@
+{% extends 'base_condutor.html' %}
+
+{% block title %}
+Adicionar conta
+{% endblock title %}
+
+{% block content %}
+<a href="{% url 'veiculos' %}">
+    <i class="fas fa-long-arrow-alt-left"></i>
+    Voltar para meus veículos
+</a>
+
+<p><h2>Adicionar veículo</h2></p>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">SUBMETER</button>
+</form>
+
+{% endblock content %} 

@@ -1,0 +1,41 @@
+{% extends 'base_condutor.html' %}
+
+{% block title %}
+Alterar dados de condutor
+{% endblock title %}
+
+{% block content %}
+<div class="div_main">
+    <a href="{% url 'perfil'%}">
+        <i class="fas fa-long-arrow-alt-left"></i>
+        Voltar para o seu perfil
+    </a>
+    <p><h2>Alterar dados de condutor</h2></p>
+    {%if Erro != ""%}
+    * {{Erro}}
+    {%else%}
+    Sua alteração necessitará de nova validação
+    {%endif%}
+    <hr>
+    <h2>Dados da carteira de motorista:</h2>
+    <form action="{% url 'perfil_update_condutor'%}" method="post">
+        {% csrf_token %}
+        <div class="div_container">
+            <div class="div_subcont">
+                <b> Numero da carteira: </b>
+                <br>
+                <input type="text" value="{{Condutor.num_carteira_motorista}}" name="num_carteira_motorista" maxlength=15 required/>
+            </div>
+            <div class="div_subcont">
+                <b> Validade: </b>
+                <br>
+                <input type="date" value="{{Condutor.validade_carteira|date:"Y-m-d"}}" name="validade_carteira" required/>
+            </div>
+        </div>
+        <center>
+            <button type="submit">Alterar</button>
+            <a  href="{% url 'perfil' %}"><button type="button" id="btn_secundario">Cancelar</button></a>
+        </center>
+    </form>
+</div>
+{% endblock content %} 

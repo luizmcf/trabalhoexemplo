@@ -1,0 +1,44 @@
+{% extends 'base_admin.html' %}
+
+{% block title %}
+Página incial
+{% endblock title %}
+
+{% block content %}
+<h3>Lista de usuários</h3>
+
+<table>
+    <tr>
+        <th>Usuário</th>
+        <th>Nome completo</th>
+        <th>Email</th>
+        <th>CPF</th>
+        <th>Telefone</th>        
+        <th>Conta</th>
+        <th>Status</th>
+        <th>Ver</th>
+    </tr>
+    {% for user in users_list %}
+        {% if user.profile.is_admin or user.profile.is_condutor or user.profile.is_passageiro %}
+        <tr>
+            <td>{{ user }}</td>
+            <td>{{ user.first_name }} {{ user.last_name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.profile.telefone }}</td>
+            <td>{{ user.profile.cpf }}</td>
+            <td>
+                {% if user.profile.is_condutor %} Condutor
+                {% elif user.profile.is_passageiro %} Passageiro
+                {% elif user.profile.is_admin %} Administrador
+                {% endif %}
+            </td>
+            <td>{{ user.profile.status }}</td>
+            <td>
+                <a href="{% url 'admin-detail-profile' user.profile.id %}"><i class="fas fa-eye"></i></a>
+            </td>
+        </tr>
+        {% endif %}
+    {% endfor %}
+</table>
+
+{% endblock content %}

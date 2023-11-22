@@ -1,0 +1,44 @@
+{% extends 'base_condutor.html' %}
+
+{% block title %}
+Seus Veículos
+{% endblock title %}
+
+{% block content %}
+<div class="div_main">
+    <a href="{% url 'index' %}">
+        <i class="fas fa-long-arrow-alt-left"></i>
+        Voltar para página inicial
+    </a>
+    <p><h2>Veículos cadastrados</h2></p>
+    {% csrf_token %}
+    <div class="div_container_rev">
+        <div class="div_subcont_mini">
+            <a href="{% url 'veiculos_criar' %}">
+                Adicionar Veículo
+            </a>
+        </div>
+    </div>
+    <hr>
+        <h2>Seus veículos:</h2>
+        {% if veic_list %}
+        <section class="busca">
+            {% for veic in veic_list %}
+            <a href="{% url 'veic_detail' veic.id %}" class="carona"> 
+            <article class="carona_busca">
+                
+                <h3><b>{{veic.apelido_veic}}</b></h3> <br />
+                {{veic.fabricante_veic}} - {{veic.modelo_veic}}<br />
+                Placa: {{veic.placa_veic}}<br />
+                Cor: {{veic.cor_veic}} - Capacidade: {{veic.capacidade_veic}} Vagas<br />
+                
+            </article>
+            </a>
+
+            {% endfor %}
+        </section>
+        {% else %}
+        <p>Não foi encontrado nenhum veículo cadastrado. :(</p>
+        {% endif %}
+</div>
+{% endblock content %} 
